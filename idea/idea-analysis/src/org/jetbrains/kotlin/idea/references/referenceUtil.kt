@@ -20,16 +20,10 @@ import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.asJava.unwrapped
 import com.intellij.psi.PsiMethod
-import org.jetbrains.kotlin.psi.JetPropertyAccessor
-import org.jetbrains.kotlin.psi.JetProperty
 import java.util.HashSet
-import org.jetbrains.kotlin.psi.JetExpression
 import org.jetbrains.kotlin.idea.intentions.OperatorToFunctionIntention
-import org.jetbrains.kotlin.psi.JetQualifiedExpression
-import org.jetbrains.kotlin.psi.JetCallExpression
-import org.jetbrains.kotlin.psi.JetObjectDeclaration
-import org.jetbrains.kotlin.psi.JetClass
 import com.intellij.psi.PsiPolyVariantReference
+import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.utils.emptyOrSingletonList
 import org.jetbrains.kotlin.psi.psiUtil.getStrictParentOfType
 import org.jetbrains.kotlin.psi.psiUtil.getNonStrictParentOfType
@@ -61,13 +55,19 @@ public fun PsiReference.matchesTarget(target: PsiElement): Boolean {
             true
 
         this is JetReference
-                && unwrappedTargets.any { it is PsiMethod && it.isConstructor() && it.getContainingClass() == unwrapped } ->
+                && unwrappedTargets.any { it.isConstructorOf(unwrapped) } ->
             true
 
         else ->
             false
     }
 }
+
+private fun PsiElement.isConstructorOf(target: PsiElement?) =
+        // call to Java constructor
+        (this is PsiMethod && isConstructor() && getContainingClass() == target) ||
+        // call to Kotlin constructor
+        (this is JetSecondaryConstructor && getStrictParentOfType<JetClass>() == target)
 
 fun AbstractJetReference<out JetExpression>.renameImplicitConventionalCall(newName: String?): JetExpression {
     if (newName == null) return expression

@@ -1,0 +1,3 @@
+New instance creation (3: 13) new A()
+Usage in extends/implements clause (13: 17) class D extends A {
+Usage in extends/implements clause (7: 17) class C extends A {

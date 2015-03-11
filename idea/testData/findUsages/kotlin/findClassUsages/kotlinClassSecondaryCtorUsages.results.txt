@@ -1,0 +1,4 @@
+New instance creation (2: 5) A()
+Supertype (10: 11) class D : A {
+Supertype (6: 11) class B : A()
+Supertype (7: 11) class C : A {
