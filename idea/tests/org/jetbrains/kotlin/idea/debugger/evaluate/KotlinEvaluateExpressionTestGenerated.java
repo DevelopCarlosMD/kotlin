@@ -211,6 +211,18 @@ public class KotlinEvaluateExpressionTestGenerated extends AbstractKotlinEvaluat
             doSingleBreakpointTest(fileName);
         }
 
+        @TestMetadata("secondaryConstructorBody.kt")
+        public void testSecondaryConstructorBody() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("idea/testData/debugger/tinyApp/src/evaluate/singleBreakpoint/secondaryConstructorBody.kt");
+            doSingleBreakpointTest(fileName);
+        }
+
+        @TestMetadata("secondaryConstructorHeader.kt")
+        public void testSecondaryConstructorHeader() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("idea/testData/debugger/tinyApp/src/evaluate/singleBreakpoint/secondaryConstructorHeader.kt");
+            doSingleBreakpointTest(fileName);
+        }
+
         @TestMetadata("simple.kt")
         public void testSimple() throws Exception {
             String fileName = JetTestUtils.navigationMetadata("idea/testData/debugger/tinyApp/src/evaluate/singleBreakpoint/simple.kt");
