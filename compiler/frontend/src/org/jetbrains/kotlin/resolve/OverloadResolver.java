@@ -27,6 +27,7 @@ import org.jetbrains.kotlin.name.Name;
 import org.jetbrains.kotlin.psi.JetClassOrObject;
 import org.jetbrains.kotlin.psi.JetDeclaration;
 import org.jetbrains.kotlin.psi.JetObjectDeclaration;
+import org.jetbrains.kotlin.psi.JetSecondaryConstructor;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -201,7 +202,11 @@ public class OverloadResolver {
                 trace.report(Errors.REDECLARATION.on(jetDeclaration, memberDescriptor.getName().asString()));
             }
             else {
-                trace.report(Errors.CONFLICTING_OVERLOADS.on(jetDeclaration, memberDescriptor, functionContainer));
+                String containingDeclaration = jetDeclaration instanceof JetSecondaryConstructor ?
+                                               ((JetSecondaryConstructor) jetDeclaration).getClassOrObject().getName() : null;
+
+                trace.report(Errors.CONFLICTING_OVERLOADS.on(
+                        jetDeclaration, memberDescriptor, containingDeclaration != null ? containingDeclaration : functionContainer));
             }
         }
     }

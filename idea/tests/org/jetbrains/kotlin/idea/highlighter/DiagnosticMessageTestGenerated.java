@@ -72,6 +72,12 @@ public class DiagnosticMessageTestGenerated extends AbstractDiagnosticMessageTes
         doTest(fileName);
     }
 
+    @TestMetadata("constructorsRedeclaration.kt")
+    public void testConstructorsRedeclaration() throws Exception {
+        String fileName = JetTestUtils.navigationMetadata("idea/testData/diagnosticMessage/constructorsRedeclaration.kt");
+        doTest(fileName);
+    }
+
     @TestMetadata("differentNamesForSameParameter.kt")
     public void testDifferentNamesForSameParameter() throws Exception {
         String fileName = JetTestUtils.navigationMetadata("idea/testData/diagnosticMessage/differentNamesForSameParameter.kt");
