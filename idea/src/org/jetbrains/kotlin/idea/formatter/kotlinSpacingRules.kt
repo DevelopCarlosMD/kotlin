@@ -46,7 +46,7 @@ fun createSpacingBuilder(settings: CodeStyleSettings): KotlinSpacingBuilder {
     val jetCommonSettings = settings.getCommonSettings(JetLanguage.INSTANCE)!!
 
     return rules(settings) {
-        val DECLARATIONS = TokenSet.create(PROPERTY, FUN, CLASS, OBJECT_DECLARATION, ENUM_ENTRY)
+        val DECLARATIONS = TokenSet.create(PROPERTY, FUN, CLASS, OBJECT_DECLARATION, ENUM_ENTRY, SECONDARY_CONSTRUCTOR)
 
         custom {
             inPosition(left = CLASS, right = CLASS).emptyLinesIfLineBreakInLeft(1)
@@ -91,6 +91,7 @@ fun createSpacingBuilder(settings: CodeStyleSettings): KotlinSpacingBuilder {
             between(PROPERTY, DECLARATIONS).blankLines(1)
 
             between(OBJECT_DECLARATION, DECLARATIONS).blankLines(1)
+            between(SECONDARY_CONSTRUCTOR, DECLARATIONS).blankLines(1)
 
             // ENUM_ENTRY - ENUM_ENTRY is exception
             between(ENUM_ENTRY, DECLARATIONS).blankLines(1)
@@ -138,6 +139,12 @@ fun createSpacingBuilder(settings: CodeStyleSettings): KotlinSpacingBuilder {
             betweenInside(TYPE_REFERENCE, DOT, FUN).spacing(0, 0, 0, false, 0)
             betweenInside(DOT, IDENTIFIER, FUN).spacing(0, 0, 0, false, 0)
             afterInside(IDENTIFIER, FUN).spacing(0, 0, 0, false, 0)
+
+            // before LPAR in constructor(): this() {}
+            after(CONSTRUCTOR_DELEGATION_REFERENCE).spacing(0, 0, 0, false, 0)
+            beforeInside(BLOCK, SECONDARY_CONSTRUCTOR).spaces(1)
+            beforeInside(COLON, SECONDARY_CONSTRUCTOR).spaces(0)
+            afterInside(COLON, SECONDARY_CONSTRUCTOR).spaces(1)
 
             aroundInside(DOT, DOT_QUALIFIED_EXPRESSION).spaces(0)
             aroundInside(SAFE_ACCESS, SAFE_ACCESS_EXPRESSION).spaces(0)

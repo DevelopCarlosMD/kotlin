@@ -400,6 +400,12 @@ public class JetFormatterTestGenerated extends AbstractJetFormatterTest {
             doTest(fileName);
         }
 
+        @TestMetadata("SecondaryConstructors.after.kt")
+        public void testSecondaryConstructors() throws Exception {
+            String fileName = JetTestUtils.navigationMetadata("idea/testData/formatter/SecondaryConstructors.after.kt");
+            doTest(fileName);
+        }
+
         @TestMetadata("SingleLineFunctionLiteral.after.kt")
         public void testSingleLineFunctionLiteral() throws Exception {
             String fileName = JetTestUtils.navigationMetadata("idea/testData/formatter/SingleLineFunctionLiteral.after.kt");
